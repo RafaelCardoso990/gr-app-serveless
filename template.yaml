@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Resources:
+  DynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Customers
+      AttributeDefinitions:
+        - AttributeName: customersId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: customersId
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+
+  RegisterCustomerFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: RegisterCustomer
+      Handler: functions/registerCustomer.handler
+      Role: arn:aws:iam::082310316163:role/service-role/gr-app-first-function-role-7s827t0h
+      Runtime: nodejs16.x
+      Code:
+        S3Bucket: gr-app-bucket   # Nome do bucket S3 onde o código está armazenado
+        S3Key: lambda-functions/registerCustomer.zip  # Caminho do código no bucket S3
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref  DynamoDBTable  # Referência ao nome da tabela DynamoDB
+          EMAIL_TOPIC_ARN: !Ref  EmailSNSTopic  # Referência ao ARN do tópico SNS
+
+  ApiGateway:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: CustomerApi
+      Description: API Gateway para gerenciar clientes.
+
+  EmailSNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: CustomerEmailTopic

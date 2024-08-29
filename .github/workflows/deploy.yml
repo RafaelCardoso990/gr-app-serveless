@@ -45,12 +45,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          aws cloudformation package \
-            --template-file template.yaml \
-            --s3-bucket gr-app-bucket \
-            --output-template-file out.yaml
           aws cloudformation deploy \
-            --template-file out.yaml \
+            --template-file template.yaml \
             --stack-name grStack \
             --capabilities CAPABILITY_NAMED_IAM
-            --region sa-east-1

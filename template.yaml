@@ -26,9 +26,11 @@ Resources:
         S3Key: lambda-functions/registerCustomer.zip  # Caminho do código no bucket S3
       Environment:
         Variables:
-          TABLE_NAME: !Ref  DynamoDBTable  # Referência ao nome da tabela DynamoDB
-          EMAIL_TOPIC_ARN: !Ref  EmailSNSTopic  # Referência ao ARN do tópico SNS
-
+            TABLE_NAME:
+              Ref: DynamoDBTable
+            EMAIL_TOPIC_ARN:
+              Ref: EmailSNSTopic
+              
   ApiGateway:
     Type: AWS::ApiGateway::RestApi
     Properties:

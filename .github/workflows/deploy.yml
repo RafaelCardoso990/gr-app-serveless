@@ -53,3 +53,4 @@ jobs:
             --template-file out.yaml \
             --stack-name grStack \
             --capabilities CAPABILITY_NAMED_IAM
+            --region sa-east-1

@@ -1,5 +1,3 @@
-"use strict";
-
 import React from "react";
 import styled from "styled-components";
 import Logos from "../shared/images/grlogo.png";

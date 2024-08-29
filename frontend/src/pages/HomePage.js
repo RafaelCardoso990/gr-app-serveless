@@ -9,7 +9,7 @@ function HomePage() {
     <Main>
       <h1>HomePage</h1>
       <Logo src={Logos} alt="Logo" />
-      <h1></h1>
+      <h1>Teste</h1>
     </Main>
   );
 }
